@@ -1,0 +1,2 @@
+创建动画的demo
+https://github.com/tianshiaimili/Property_animation-Demo.git
