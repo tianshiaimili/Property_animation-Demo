@@ -15,8 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 
 public class ValueAnimatorActivity extends Activity
@@ -49,19 +49,28 @@ public class ValueAnimatorActivity extends Activity
 	 */
 	public void verticalRun(View view)
 	{
-		ValueAnimator animator = ValueAnimator.ofFloat(0, mScreenHeight
-				- mBlueBall.getHeight());
-		animator.setTarget(mBlueBall);
-		animator.setDuration(1000).start();
-		// animator.setInterpolator(value)
-		animator.addUpdateListener(new AnimatorUpdateListener()
-		{
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation)
-			{
-				mBlueBall.setTranslationY((Float) animation.getAnimatedValue());
-			}
-		});
+//		ValueAnimator animator = ValueAnimator.ofFloat(0, mScreenHeight
+//				- mBlueBall.getHeight());
+//		animator.setTarget(mBlueBall);
+//		animator.setDuration(1000).start();
+//		// animator.setInterpolator(value)
+//		animator.addUpdateListener(new AnimatorUpdateListener()
+//		{
+//			@Override
+//			public void onAnimationUpdate(ValueAnimator animation)
+//			{
+//				mBlueBall.setTranslationY((Float) animation.getAnimatedValue());
+//			}
+//		});
+		
+		////////////////////ObjectAnimator 比较简单点
+		ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(mBlueBall, "translationY", 0, mScreenHeight
+				- mBlueBall.getHeight()-20);
+		objectAnimator.setDuration(500);
+		objectAnimator.setInterpolator(new BounceInterpolator());
+		objectAnimator.start();
+		
+		
 	}
 
 	/**
@@ -83,7 +92,7 @@ public class ValueAnimatorActivity extends Activity
 			public PointF evaluate(float fraction, PointF startValue,
 					PointF endValue)
 			{
-				Log.e(TAG, fraction * 3 + "");
+				LogUtils.e(TAG, fraction * 3 + "");
 				// x方向200px/s ，则y方向0.5 * g * t (g = 100px / s*s)
 				PointF point = new PointF();
 				point.x = 200 * fraction * 3;
@@ -115,7 +124,7 @@ public class ValueAnimatorActivity extends Activity
 			@Override
 			public void onAnimationEnd(Animator animation)
 			{
-				Log.e(TAG, "onAnimationEnd");
+				LogUtils.e(TAG, "onAnimationEnd");
 				ViewGroup parent = (ViewGroup) mBlueBall.getParent();
 				if (parent != null)
 					parent.removeView(mBlueBall);
@@ -128,20 +137,20 @@ public class ValueAnimatorActivity extends Activity
 			@Override
 			public void onAnimationStart(Animator animation)
 			{
-				Log.e(TAG, "onAnimationStart");
+				LogUtils.e(TAG, "onAnimationStart");
 			}
 
 			@Override
 			public void onAnimationRepeat(Animator animation)
 			{
 				// TODO Auto-generated method stub
-				Log.e(TAG, "onAnimationRepeat");
+				LogUtils.e(TAG, "onAnimationRepeat");
 			}
 
 			@Override
 			public void onAnimationEnd(Animator animation)
 			{
-				Log.e(TAG, "onAnimationEnd");
+				LogUtils.e(TAG, "onAnimationEnd------------");
 				ViewGroup parent = (ViewGroup) mBlueBall.getParent();
 				if (parent != null)
 					parent.removeView(mBlueBall);
@@ -151,7 +160,7 @@ public class ValueAnimatorActivity extends Activity
 			public void onAnimationCancel(Animator animation)
 			{
 				// TODO Auto-generated method stub
-				Log.e(TAG, "onAnimationCancel");
+				LogUtils.e(TAG, "onAnimationCancel");
 			}
 		});
 		anim.start();

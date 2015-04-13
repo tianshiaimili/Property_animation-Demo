@@ -13,6 +13,7 @@ import android.widget.ImageView;
 public class ViewAnimateActivity extends Activity {
 	protected static final String TAG = "ViewAnimateActivity";
 
+	/**改变的view*/
 	private ImageView mBlueBall;
 	private float mScreenHeight;
 
